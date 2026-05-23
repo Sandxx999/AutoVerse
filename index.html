@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoVerse — Smart Car Marketplace</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav class="navbar navbar-expand-lg fixed-top av-navbar" id="mainNav">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand av-brand" href="#">
+      <span class="brand-icon">⬡</span> AUTO<span class="brand-accent">VERSE</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="nav-toggle-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#search-section">Browse Cars</a></li>
+        <li class="nav-item"><a class="nav-link" href="#features">Why Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#listings">Listings</a></li>
+        <li class="nav-item"><a class="nav-link" href="#emi-section">EMI Calc</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions d-flex gap-2 align-items-center">
+        <button class="btn btn-ghost-nav" id="loginBtn">Sign In</button>
+        <button class="btn btn-sell-nav" onclick="document.getElementById('sellModal').style.display='flex'">
+          <i class="fa fa-plus"></i> Sell Car
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero-section" id="home">
+  <div class="hero-bg-overlay"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content container">
+    <div class="hero-badge">🏁 India's Smartest Car Platform</div>
+    <h1 class="hero-title">FIND YOUR<br/><span class="hero-accent">DREAM RIDE</span></h1>
+    <p class="hero-sub">Browse 50,000+ verified cars · Instant EMI · Doorstep Delivery</p>
+    <div class="hero-search-card">
+      <div class="search-tabs">
+        <button class="stab active" data-tab="buy">Buy</button>
+        <button class="stab" data-tab="sell">Sell</button>
+        <button class="stab" data-tab="lease">Lease</button>
+      </div>
+      <div class="search-form" id="buy-tab">
+        <select class="sfield" id="heroType">
+          <option value="">Car Type</option>
+          <option>SUV</option><option>Sedan</option><option>Hatchback</option>
+          <option>Coupe</option><option>Electric</option><option>Luxury</option>
+        </select>
+        <select class="sfield" id="heroBrand">
+          <option value="">Brand</option>
+          <option>Maruti Suzuki</option><option>Hyundai</option><option>Tata</option>
+          <option>BMW</option><option>Mercedes</option><option>Audi</option>
+          <option>Toyota</option><option>Honda</option><option>Mahindra</option>
+        </select>
+        <select class="sfield" id="heroBudget">
+          <option value="">Budget</option>
+          <option value="500000">Under ₹5L</option>
+          <option value="1000000">₹5L – ₹10L</option>
+          <option value="2000000">₹10L – ₹20L</option>
+          <option value="5000000">₹20L – ₹50L</option>
+          <option value="99999999">₹50L+</option>
+        </select>
+        <button class="btn btn-hero-search" onclick="heroSearch()">
+          <i class="fa fa-search"></i> Search Cars
+        </button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-num" data-count="50000">0</span><span>+</span><div class="hstat-label">Cars Listed</div></div>
+      <div class="hstat-divider"></div>
+      <div class="hstat"><span class="hstat-num" data-count="12000">0</span><span>+</span><div class="hstat-label">Happy Buyers</div></div>
+      <div class="hstat-divider"></div>
+      <div class="hstat"><span class="hstat-num" data-count="99">0</span><span>%</span><div class="hstat-label">Verified Listings</div></div>
+    </div>
+  </div>
+  <div class="hero-car-visual">
+    <div class="car-glow"></div>
+    <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/40087/fortuner-exterior-right-front-three-quarter-3.jpeg?isig=0" alt="Featured Car" class="hero-car-img" onerror="this.src='https://placehold.co/700x350/111/e60012?text=AutoVerse'"/>
+  </div>
+</section>
+
+<!-- ═══════════════════════ BRANDS STRIP ═══════════════════════ -->
+<section class="brands-strip">
+  <div class="container">
+    <p class="brands-label">FEATURED BRANDS</p>
+    <div class="brands-scroll" id="brandsScroll">
+      <div class="brand-chip" onclick="filterByBrand('Maruti Suzuki')">Maruti Suzuki</div>
+      <div class="brand-chip" onclick="filterByBrand('Hyundai')">Hyundai</div>
+      <div class="brand-chip" onclick="filterByBrand('Tata')">Tata</div>
+      <div class="brand-chip" onclick="filterByBrand('BMW')">BMW</div>
+      <div class="brand-chip" onclick="filterByBrand('Mercedes')">Mercedes</div>
+      <div class="brand-chip" onclick="filterByBrand('Audi')">Audi</div>
+      <div class="brand-chip" onclick="filterByBrand('Toyota')">Toyota</div>
+      <div class="brand-chip" onclick="filterByBrand('Honda')">Honda</div>
+      <div class="brand-chip" onclick="filterByBrand('Mahindra')">Mahindra</div>
+      <div class="brand-chip" onclick="filterByBrand('Kia')">Kia</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SEARCH + FILTER SECTION ═══════════════════════ -->
+<section class="search-section" id="search-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Browse <span class="acc">All Cars</span></h2>
+      <p class="section-sub">Filter by your preference and find the perfect match</p>
+    </div>
+    <div class="filter-bar">
+      <input type="text" class="filter-input" id="searchInput" placeholder="🔍  Search by name, brand or model..." oninput="applyFilters()"/>
+      <select class="filter-select" id="filterType" onchange="applyFilters()">
+        <option value="">All Types</option>
+        <option>SUV</option><option>Sedan</option><option>Hatchback</option>
+        <option>Coupe</option><option>Electric</option><option>Luxury</option>
+      </select>
+      <select class="filter-select" id="filterFuel" onchange="applyFilters()">
+        <option value="">All Fuels</option>
+        <option>Petrol</option><option>Diesel</option><option>Electric</option><option>Hybrid</option>
+      </select>
+      <select class="filter-select" id="filterSort" onchange="applyFilters()">
+        <option value="">Sort By</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="year-desc">Newest First</option>
+        <option value="rating">Top Rated</option>
+      </select>
+      <button class="btn btn-reset-filter" onclick="resetFilters()"><i class="fa fa-rotate-right"></i> Reset</button>
+    </div>
+
+    <!-- Car Listings Grid -->
+    <div class="car-grid" id="carGrid"></div>
+    <div class="no-results" id="noResults" style="display:none;">
+      <i class="fa fa-car-crash"></i>
+      <p>No cars match your filters. Try different options!</p>
+    </div>
+    <div class="load-more-wrap">
+      <button class="btn btn-load-more" id="loadMoreBtn" onclick="loadMore()">Load More Cars</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEATURES SECTION ═══════════════════════ -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Why <span class="acc">AutoVerse?</span></h2>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🛡️</div>
+        <h3>100% Verified</h3>
+        <p>Every listing goes through a 200-point inspection by certified automotive experts.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚡</div>
+        <h3>Instant Loan</h3>
+        <p>Get pre-approved car loans in under 60 seconds from 30+ banking partners.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🚚</div>
+        <h3>Doorstep Delivery</h3>
+        <p>Your car delivered to your home anywhere in India within 72 hours.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔄</div>
+        <h3>7-Day Return</h3>
+        <p>Not satisfied? Return within 7 days, no questions asked. 100% refund.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <h3>Price Intelligence</h3>
+        <p>AI-powered pricing ensures you always get the best deal in the market.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎯</div>
+        <h3>Smart Match</h3>
+        <p>Our algorithm suggests cars that perfectly match your lifestyle and budget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ LISTINGS (FEATURED) ═══════════════════════ -->
+<section class="featured-section" id="listings">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Featured <span class="acc">Listings</span></h2>
+      <p class="section-sub">Hand-picked premium deals updated daily</p>
+    </div>
+    <div class="featured-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ EMI CALCULATOR ═══════════════════════ -->
+<section class="emi-section" id="emi-section">
+  <div class="container">
+    <div class="emi-card">
+      <div class="emi-left">
+        <h2 class="section-title">EMI <span class="acc">Calculator</span></h2>
+        <p class="section-sub">Plan your dream car purchase with precision</p>
+        <div class="emi-field">
+          <label>Car Price (₹)</label>
+          <input type="range" id="emiPrice" min="300000" max="10000000" step="50000" value="1500000" oninput="calcEMI()"/>
+          <span id="emiPriceVal">₹15,00,000</span>
+        </div>
+        <div class="emi-field">
+          <label>Down Payment (₹)</label>
+          <input type="range" id="emiDown" min="0" max="5000000" step="50000" value="300000" oninput="calcEMI()"/>
+          <span id="emiDownVal">₹3,00,000</span>
+        </div>
+        <div class="emi-field">
+          <label>Interest Rate (%)</label>
+          <input type="range" id="emiRate" min="6" max="20" step="0.5" value="9" oninput="calcEMI()"/>
+          <span id="emiRateVal">9%</span>
+        </div>
+        <div class="emi-field">
+          <label>Loan Tenure (Months)</label>
+          <input type="range" id="emiTenure" min="12" max="84" step="6" value="48" oninput="calcEMI()"/>
+          <span id="emiTenureVal">48 Months</span>
+        </div>
+      </div>
+      <div class="emi-right">
+        <div class="emi-result-card">
+          <div class="emi-result-label">Monthly EMI</div>
+          <div class="emi-result-amount" id="emiResult">₹0</div>
+          <div class="emi-breakdown" id="emiBreakdown"></div>
+          <div class="emi-donut-wrap">
+            <canvas id="emiDonut" width="200" height="200"></canvas>
+            <div class="emi-donut-legend" id="emiLegend"></div>
+          </div>
+          <button class="btn btn-emi-apply" onclick="document.getElementById('contactForm').scrollIntoView({behavior:'smooth'})">
+            Apply for Loan →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Get in <span class="acc">Touch</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="cinfo-item"><i class="fa fa-location-dot"></i><div><strong>AutoVerse HQ</strong><br/>Cyber City, Gurgaon, Haryana 122002</div></div>
+        <div class="cinfo-item"><i class="fa fa-phone"></i><div><strong>+91 9876 543 210</strong><br/>Mon–Sat, 9am to 8pm</div></div>
+        <div class="cinfo-item"><i class="fa fa-envelope"></i><div><strong>hello@autoverse.in</strong><br/>We reply within 2 hours</div></div>
+        <div class="cinfo-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
+        <div class="cf-row">
+          <input type="text" class="cf-input" placeholder="Full Name" required/>
+          <input type="tel" class="cf-input" placeholder="Phone Number" required/>
+        </div>
+        <input type="email" class="cf-input" placeholder="Email Address" required/>
+        <select class="cf-input" required>
+          <option value="">Enquiry Type</option>
+          <option>Buy a Car</option><option>Sell My Car</option>
+          <option>Car Loan</option><option>Insurance</option><option>Other</option>
+        </select>
+        <textarea class="cf-input" rows="4" placeholder="Your message..."></textarea>
+        <button type="submit" class="btn btn-contact-submit">Send Message <i class="fa fa-arrow-right"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="av-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="footer-logo"><span class="brand-icon">⬡</span> AUTO<span class="brand-accent">VERSE</span></div>
+        <p>India's smartest car marketplace. Buy, sell, or finance your dream car with confidence.</p>
+      </div>
+      <div class="footer-col"><h5>Company</h5><a href="#">About Us</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Blog</a></div>
+      <div class="footer-col"><h5>Services</h5><a href="#">Buy Car</a><a href="#">Sell Car</a><a href="#">Car Loan</a><a href="#">Insurance</a></div>
+      <div class="footer-col"><h5>Support</h5><a href="#">Help Center</a><a href="#">Contact</a><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 AutoVerse. All rights reserved. Made with ❤️ in India.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════ CAR DETAIL MODAL ═══════════════════════ -->
+<div class="av-modal" id="carModal">
+  <div class="av-modal-content" id="carModalContent"></div>
+</div>
+
+<!-- ═══════════════════════ SELL CAR MODAL ═══════════════════════ -->
+<div class="av-modal" id="sellModal">
+  <div class="av-modal-content sell-modal-content">
+    <button class="modal-close" onclick="document.getElementById('sellModal').style.display='none'">&times;</button>
+    <h2 class="modal-title">List Your <span class="acc">Car</span></h2>
+    <form onsubmit="submitListing(event)">
+      <div class="cf-row">
+        <input type="text" class="cf-input" placeholder="Your Name" required/>
+        <input type="tel" class="cf-input" placeholder="Phone" required/>
+      </div>
+      <div class="cf-row">
+        <input type="text" class="cf-input" id="sellBrand" placeholder="Brand (e.g. Honda)" required/>
+        <input type="text" class="cf-input" id="sellModel" placeholder="Model (e.g. City)" required/>
+      </div>
+      <div class="cf-row">
+        <input type="number" class="cf-input" id="sellYear" placeholder="Year" min="2000" max="2025" required/>
+        <input type="number" class="cf-input" id="sellPrice" placeholder="Asking Price (₹)" required/>
+      </div>
+      <div class="cf-row">
+        <select class="cf-input" id="sellFuel" required>
+          <option value="">Fuel Type</option>
+          <option>Petrol</option><option>Diesel</option><option>Electric</option><option>Hybrid</option>
+        </select>
+        <select class="cf-input" id="sellType" required>
+          <option value="">Car Type</option>
+          <option>SUV</option><option>Sedan</option><option>Hatchback</option><option>Coupe</option><option>Luxury</option>
+        </select>
+      </div>
+      <input type="number" class="cf-input" id="sellKm" placeholder="Kilometres Driven" required/>
+      <textarea class="cf-input" id="sellDesc" rows="3" placeholder="Short description..."></textarea>
+      <button type="submit" class="btn btn-contact-submit w-100">Submit Listing <i class="fa fa-car"></i></button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════ LOGIN MODAL ═══════════════════════ -->
+<div class="av-modal" id="loginModal">
+  <div class="av-modal-content login-modal-content">
+    <button class="modal-close" onclick="document.getElementById('loginModal').style.display='none'">&times;</button>
+    <h2 class="modal-title">Welcome <span class="acc">Back</span></h2>
+    <div class="login-tabs">
+      <button class="ltab active" onclick="showLoginTab('login',this)">Sign In</button>
+      <button class="ltab" onclick="showLoginTab('register',this)">Register</button>
+    </div>
+    <form id="loginForm" onsubmit="loginUser(event)">
+      <input type="email" class="cf-input" placeholder="Email Address" required/>
+      <input type="password" class="cf-input" placeholder="Password" required/>
+      <button type="submit" class="btn btn-contact-submit w-100">Sign In</button>
+    </form>
+    <form id="registerForm" style="display:none" onsubmit="registerUser(event)">
+      <input type="text" class="cf-input" placeholder="Full Name" required/>
+      <input type="email" class="cf-input" placeholder="Email Address" required/>
+      <input type="password" class="cf-input" placeholder="Create Password" required/>
+      <button type="submit" class="btn btn-contact-submit w-100">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="av-toast" id="avToast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
